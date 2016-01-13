@@ -17,18 +17,18 @@ package org.everit.expression.jexl.internal;
 
 import java.util.Map;
 
-import org.apache.commons.jexl2.MapContext;
-import org.apache.commons.jexl2.Script;
+import org.apache.commons.jexl3.JexlScript;
+import org.apache.commons.jexl3.MapContext;
 import org.everit.expression.CompiledExpression;
 
 /**
- * {@link CompiledExpression} implementation that wraps of a Jexl based {@link Script}.
+ * {@link CompiledExpression} implementation that wraps of a Jexl based {@link JexlScript}.
  */
 public class JexlCompiledExpression implements CompiledExpression {
 
-  private final Script jexlScript;
+  private final JexlScript jexlScript;
 
-  public JexlCompiledExpression(final Script jexlScript) {
+  public JexlCompiledExpression(final JexlScript jexlScript) {
     this.jexlScript = jexlScript;
   }
 

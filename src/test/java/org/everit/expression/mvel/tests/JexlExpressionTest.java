@@ -34,7 +34,7 @@ package org.everit.expression.mvel.tests;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.jexl2.JexlException;
+import org.apache.commons.jexl3.JexlException;
 import org.everit.expression.CompiledExpression;
 import org.everit.expression.ParserConfiguration;
 import org.everit.expression.jexl.JexlExpressionCompiler;
@@ -56,7 +56,7 @@ public class JexlExpressionTest {
     Map<String, Object> vars = new HashMap<String, Object>();
     vars.put("a", "test");
     try {
-      Object eval = compiledExpression.eval(vars);
+      compiledExpression.eval(vars);
       Assert.fail("Exception should have been thrown");
     } catch (JexlException e) {
       e.printStackTrace();

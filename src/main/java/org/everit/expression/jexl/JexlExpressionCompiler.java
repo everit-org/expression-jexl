@@ -17,13 +17,14 @@ package org.everit.expression.jexl;
 
 import java.util.Set;
 
-import org.apache.commons.jexl2.DebugInfo;
-import org.apache.commons.jexl2.JexlEngine;
-import org.apache.commons.jexl2.JexlInfo;
-import org.apache.commons.jexl2.Script;
+import org.apache.commons.jexl3.JexlBuilder;
+import org.apache.commons.jexl3.JexlEngine;
+import org.apache.commons.jexl3.JexlInfo;
+import org.apache.commons.jexl3.JexlScript;
 import org.everit.expression.CompiledExpression;
 import org.everit.expression.ExpressionCompiler;
 import org.everit.expression.ParserConfiguration;
+import org.everit.expression.jexl.internal.CustomizedJexlArithmetic;
 import org.everit.expression.jexl.internal.JexlCompiledExpression;
 
 /**
@@ -47,7 +48,7 @@ public class JexlExpressionCompiler implements ExpressionCompiler {
       throw new IllegalArgumentException("Parser configuration must be defined");
     }
 
-    JexlInfo jexlInfo = new DebugInfo(parserConfiguration.getName(),
+    JexlInfo jexlInfo = new JexlInfo(parserConfiguration.getName(),
         parserConfiguration.getStartRow(), parserConfiguration.getStartColumn());
     String[] parameterNames = null;
     if (parserConfiguration.getVariableTypes() != null) {
@@ -55,12 +56,11 @@ public class JexlExpressionCompiler implements ExpressionCompiler {
       parameterNames = parameterSet.toArray(new String[parameterSet.size()]);
     }
 
-    JexlEngine jexlEngine = new JexlEngine();
-    jexlEngine.setSilent(false);
-    jexlEngine.setLenient(false);
-    jexlEngine.setClassLoader(parserConfiguration.getClassLoader());
+    JexlEngine jexlEngine = new JexlBuilder().silent(false).debug(true)
+        .loader(parserConfiguration.getClassLoader()).arithmetic(new CustomizedJexlArithmetic(true))
+        .create();
 
-    Script script = jexlEngine.createScript(expression, jexlInfo, parameterNames);
+    JexlScript script = jexlEngine.createScript(jexlInfo, expression, parameterNames);
     return new JexlCompiledExpression(script);
   }
 }

@@ -50,6 +50,7 @@ public class JexlExpressionTest {
 
     parserContext.setStartColumn(11);
     parserContext.setStartRow(21);
+    parserContext.setName("exceptionDuringEvaluationExpr");
 
     String testExpression = " \n   a.substring(-1)";
     CompiledExpression compiledExpression = compiler.compile(testExpression, parserContext);
@@ -71,8 +72,9 @@ public class JexlExpressionTest {
 
     parserContext.setStartColumn(11);
     parserContext.setStartRow(21);
+    parserContext.setName("exceptionOnCompilationExpr");
 
-    String testExpression = " \n   1.xx()";
+    String testExpression = " \n  ...xx()";
 
     try {
       compiler.compile(testExpression, parserContext);

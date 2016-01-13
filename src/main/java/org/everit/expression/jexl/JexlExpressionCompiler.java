@@ -47,8 +47,8 @@ public class JexlExpressionCompiler implements ExpressionCompiler {
       throw new IllegalArgumentException("Parser configuration must be defined");
     }
 
-    JexlInfo jexlInfo = new DebugInfo(null, parserConfiguration.getStartRow(),
-        parserConfiguration.getStartColumn());
+    JexlInfo jexlInfo = new DebugInfo(parserConfiguration.getName(),
+        parserConfiguration.getStartRow(), parserConfiguration.getStartColumn());
     String[] parameterNames = null;
     if (parserConfiguration.getVariableTypes() != null) {
       Set<String> parameterSet = parserConfiguration.getVariableTypes().keySet();
